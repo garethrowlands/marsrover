@@ -181,7 +181,7 @@ test-suite spec
   type:            exitcode-stdio-1.0
   build-depends:   base >= 4,
                    hspec
-  hs-source-dirs:  src
+  hs-source-dirs:  spec
   main-is:         Spec.hs
   ghc-options:     -Wall -rtsopts
 
