@@ -9,19 +9,7 @@ build-depends:       HUnit -any, HUnit -any, HUnit -any, HUnit -any,
                base >=4.0.0.0, base >=4.0.0.0, base >=4.0.0.0, base >=4.0.0.0,
                containers -any, containers -any, mtl -any, mtl -any, parsec -any,
                parsec -any, parsec -any, parsec -any
-
-synopsis:            A mars rover
--- description:         
-license:             BSD3
-license-file:        LICENSE
-author:              Gareth Rowlands
-maintainer:          gareth.rowlands@akqa.com
--- copyright:           
--- category:            
-build-type:          Simple
-cabal-version:       >=1.8
-
-synopsis:            Mars Rover
+stability:           homepage:            package-url:         bug-reports:         synopsis:            Mars Rover
 description:         Implements the Mars Rover Challenge as specified here:
              .
              <https://extranet.akqa.com/collaboration/display/intAnoraksChallenge/The+Mars+Rover+Challenge>
@@ -167,15 +155,7 @@ description:         Implements the Mars Rover Challenge as specified here:
              it harder to interpret.
 category:    rover            
 author:              Gareth Rowlands
-
-executable rover
-  build-depends:       base ==4.5.*,
-    HUnit ==1.2.*,
-    containers ==0.4.*,
-    parsec ==3.1.*,
-    mtl ==2.1.*
-  hs-source-dirs:      src
-  main-is:  Main.hs
+tested-with:         ghc
 
 test-suite spec
   type:            exitcode-stdio-1.0
@@ -187,8 +167,7 @@ test-suite spec
 
 test-suite doctests
   type:            exitcode-stdio-1.0
-  build-depends:   base >= 4, doctest
-
+  build-depends:   base >= 4
   hs-source-dirs:  src
   main-is:         Doctests.hs         
   ghc-options:     -Wall -rtsopts
