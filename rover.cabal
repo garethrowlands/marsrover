@@ -5,11 +5,6 @@ build-type:          Simple
 license:             AllRightsReserved
 license-file:        ""
 copyright:           maintainer:          gareth.rowlands@akqa.com
-build-depends:       HUnit -any, HUnit -any, HUnit -any, HUnit -any,
-               base >=4.0.0.0, base >=4.0.0.0, base >=4.0.0.0, base >=4.0.0.0,
-               containers -any, containers -any, mtl -any, mtl -any, parsec -any,
-               parsec -any, parsec -any, parsec -any
-
 synopsis:            A mars rover
 -- description:         
 license:             BSD3
@@ -169,28 +164,35 @@ category:    rover
 author:              Gareth Rowlands
 
 executable rover
-  build-depends:       base ==4.5.*,
-    HUnit ==1.2.*,
-    containers ==0.4.*,
-    parsec ==3.1.*,
-    mtl ==2.1.*
+  build-depends:       HUnit -any,
+               base >=4.0.0.0,
+               containers -any, mtl -any,
+               parsec -any
   hs-source-dirs:      src
   main-is:  Main.hs
 
 test-suite spec
   type:            exitcode-stdio-1.0
   build-depends:   base >= 4,
-                   hspec
-  hs-source-dirs:  spec
+                   hspec-discover,
+                   hspec == 1.2.*,
+                   HUnit,
+                   QuickCheck,
+                   containers -any, mtl -any,
+                   parsec -any
+  hs-source-dirs:  spec,src
   main-is:         Spec.hs
-  ghc-options:     -Wall -rtsopts
+  ghc-options:     -Wall -rtsopts -O0
 
 test-suite doctests
   type:            exitcode-stdio-1.0
-  build-depends:   base >= 4, doctest
-
+  build-depends:   
+                   base >= 4,
+                   doctest,
+                   containers -any, mtl -any,
+                   parsec -any
   hs-source-dirs:  src
   main-is:         Doctests.hs         
-  ghc-options:     -Wall -rtsopts
+  ghc-options:     -Wall -rtsopts -O0
   other-modules:   Doctests
 

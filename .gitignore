@@ -164,3 +164,6 @@ pip-log.txt
 
 # Eclipse FP
 .dist-buildwrapper
+
+#SourceGraph
+SourceGraph

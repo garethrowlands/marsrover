@@ -61,6 +61,7 @@ moveLocation (dx,dy) (x,y) = (x+dx,y+dy)
 moveInDirection :: Heading -> Location -> Location
 moveInDirection = moveLocation . vectorFromDirection
 
+
 -- |Move a 'RoverPos' forwards
 -- moveForwards :: RoverPos -> RoverPos
 -- moveForwards (RoverPos p h) = RoverPos p' h

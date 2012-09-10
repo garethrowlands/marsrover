@@ -72,7 +72,8 @@ mkEmptyEnvironment p = Environment {
     }
 
 -- |Add a rover to the 'Environment'. Broken rovers leave it unchanged.
-env `addRover` (Right (RoverPos l h)) = env {
+addRover :: Environment -> Either a RoverPos -> Environment
+env `addRover` (Right (RoverPos l _)) = env {
         envRovers = l `S.insert` envRovers env
     }
 env `addRover` (Left _) = env
