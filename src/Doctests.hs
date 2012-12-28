@@ -1,3 +1,3 @@
 
 import Test.DocTest
-main = doctest ["--optghc=-isrc", "src/Main.hs"]
+main = doctest ["-isrc:console", "Main"]

@@ -8,7 +8,7 @@ module Environment
     )
 where
 
-import Control.Monad.Error
+import Control.Error
 import Data.Set as S
 import Geometry
 
@@ -34,11 +34,6 @@ data PlateauError = PlateauBoundsOutOfRange Int Int
 
 -- |The result of constructing a 'Plateau': 'Either' the 'Plateau' or a 'PlateauError'
 type PlateauOrError = Either PlateauError Plateau
-
--- |Makes 'PlateauError' an instance of 'Error' so it can be used with the 'Either' monad
---  from "Control.Monad.Error".
-instance Error PlateauError where
-    strMsg = error
 
 -- |Enumerates the kinds of thing a rover can collide with.
 data ObstacleType = AnotherRover

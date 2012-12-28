@@ -18,6 +18,8 @@ renderRoverState :: RoverState -> String
 renderRoverState (Right r) = renderRoverPos r
 renderRoverState (Left (r `CrashedInto` o)) = renderRoverPos r ++
     " but crashed into " ++ renderObstacle o ++ "!"
+renderRoverState (Left (r `LandedOn` o)) = renderRoverPos r ++
+    " but landed on " ++ renderObstacle o ++ "!"
 
 -- |Renders a 'RoverPos' as required by the specification
 renderRoverPos :: RoverPos -> String
