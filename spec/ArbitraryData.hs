@@ -8,6 +8,7 @@ import Control.Applicative
 import Geometry
 import Environment
 import Data.Set as S
+import Control.Error (isRight)
 
 instance Arbitrary (S.Set Location) where
     arbitrary = S.fromList <$> arbitrary
@@ -30,8 +31,6 @@ instance Arbitrary Environment where
                     height <- choose (0, t)
                     return (width,height)
 
-isRight (Left _) = False
-isRight (Right _) = True
 
 instance Arbitrary PlateauOrError where
     arbitrary = mkPlateau <$> arbitrary <*> arbitrary

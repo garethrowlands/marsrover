@@ -1,4 +1,3 @@
-
 module EnvironmentSpec where
 
 import Test.HUnit
@@ -9,11 +8,13 @@ import Data.Set as S
 import Data.Maybe (isJust,isNothing)
 import Environment
 import Geometry
-import ArbitraryData (isRight)
+import Control.Error (isRight, isLeft)
+import ArbitraryData
 
+spec :: Spec
 spec = do
 
-    describe "mkPlateau" $ do
+    context "mkPlateau" $ do
     
         it "returns a Plateau when right and top are bigger than or equal to zero" $ do
             property $ \right top -> right >= 0 && top >= 0 ==> (isRight $ mkPlateau right top)
@@ -22,7 +23,7 @@ spec = do
             property $ \right top -> right < 0 && top < 0 ==> (isLeft $ mkPlateau right top) 
             
             
-    describe "outside" $ do
+    context "outside" $ do
         it "-1,-1 is outside" $ do
             plateauProperty (\r t p -> (-1,-1) `outside` p)
         it "0,0 is inside" $ do
@@ -38,7 +39,7 @@ spec = do
         it "0,-1 is outside" $ do
             plateauProperty (\r t p -> (0,-1) `outside` p)
 
-    describe "addRover" $ do
+    context "addRover" $ do
         it "makes the rover's location an obstacle in the environment" $ do
            property $ \env rover ->
                 let env' = env `addRover` Right rover
@@ -48,22 +49,23 @@ spec = do
         it "does not change the environment when given an error instead of a rover" $ do
            property $ \env -> (env `addRover` Left "an error") == env
            
-    describe "obstacleAt" $ do
+    context "obstacleAt" $ do
     
         it "returns PlateauEdge when the given location is outside the plateau" $ do
             property $ \env@(Environment plateau _) location ->
                 location `outside` plateau ==> obstacleAt env location == Just PlateauEdge
                 
         it "returns AnotherRover when another rover is already at the given location" $ do
-            property $ \env location ->
-                not(location `outside` (envPlateau env)) ==>
-                let env' = env `addRover` (Right $ RoverPos location N)
-                in  obstacleAt env' location == Just AnotherRover 
+            property $ \env@(Environment _ rovers)->
+                and [obstacleAt env location == Just AnotherRover|location <- toList rovers]
+
+--            property $ \env location ->
+--                not(location `outside` (envPlateau env)) ==>
+--                let env' = env `addRover` (Right $ RoverPos location N)
+--                in  obstacleAt env' location == Just AnotherRover 
 
 plateauProperty predicate = property $ \r t -> case mkPlateau r t of
     Right plateau -> predicate r t plateau
     Left _  -> True -- no plateau
 
     
-isLeft = not . isRight
-

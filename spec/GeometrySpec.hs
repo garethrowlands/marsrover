@@ -12,8 +12,9 @@ import ArbitraryData ()
 
 main = hspec spec
 
+spec :: Spec
 spec = do
-    describe "rotate" $ do
+    context "rotate" $ do
         it "returns to the same heading when applied 4 times in the same direction" $ do
             property $ \heading rotation -> iterate (rotate rotation) heading !! 4 == heading
             
@@ -24,7 +25,7 @@ spec = do
         it "returns W when rotated AntiClockwise from N" $ do
             rotate AntiClockwise N == W 
             
-    describe "moveInDirection" $ do
+    context "moveInDirection" $ do
         it "returns (x, y+1) when given N and (x, y): 'the square directly North from (x, y) is (x, y+1)'" $ do
             property $ \(x,y) -> moveInDirection N (x,y) == (x, y+1)
 
@@ -32,4 +33,4 @@ spec = do
             let moveInDirection' = flip moveInDirection
             property $ \location -> foldl moveInDirection' location [N,E,S,W] == location
             
-    
+ 
