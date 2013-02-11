@@ -1,15 +1,23 @@
-name:           rover
-version:        0.0.1
-cabal-version:  >=1.8
-build-type:     Simple
-license:        BSD3
-license-file:   LICENSE
-copyright:      maintainer:          gareth.rowlands@akqa.com
-synopsis:       Mars Rover
-author:         Gareth Rowlands
-maintainer:     gareth.rowlands@akqa.com
-description:    
-             Implements the Mars Rover Challenge as specified here:
+name:                rover
+version:             0.0.1
+cabal-version: >= 1.2
+build-type:          Simple
+license:             AllRightsReserved
+license-file:        ""
+copyright:           maintainer:          gareth.rowlands@akqa.com
+synopsis:            A mars rover
+-- description:         
+license:             BSD3
+license-file:        LICENSE
+author:              Gareth Rowlands
+maintainer:          gareth.rowlands@akqa.com
+-- copyright:           
+-- category:            
+build-type:          Simple
+cabal-version:       >=1.8
+
+synopsis:            Mars Rover
+description:         Implements the Mars Rover Challenge as specified here:
              .
              <https://extranet.akqa.com/collaboration/display/intAnoraksChallenge/The+Mars+Rover+Challenge>
              .
@@ -152,43 +160,48 @@ description:
              .
              5. The code analysis report includes the Test modules, which makes
              it harder to interpret.
-category:       rover
+category:    rover            
+author:              Gareth Rowlands
 
 library
-  build-depends:   
-               HUnit -any,
+  build-depends:       HUnit -any,
                base >=4.0.0.0,
-               containers -any,
-               errors -any,
-               parsec -any,
-               errors, mtl -any
-  hs-source-dirs:  src
+               containers -any, mtl -any,
+               parsec -any
+  hs-source-dirs:      src
+
 
 executable rover-console
-  build-depends:   
-               rover -any,
+  build-depends:       rover -any,
                HUnit -any,
                base >=4.0.0.0,
-               containers -any,
-               parsec -any, errors -any, mtl -any
-  hs-source-dirs:  src,console
-  main-is:         Main.hs
+               containers -any, mtl -any,
+               parsec -any
+  hs-source-dirs:      src,console
+  main-is:  Main.hs
 
 test-suite spec
   type:            exitcode-stdio-1.0
-  build-depends:   
-                   base >= 4,
-                   hspec >= 1.4,
+  build-depends:   base >= 4,
+                   hspec-discover,
+                   hspec == 1.2.*,
                    HUnit,
                    QuickCheck,
                    containers -any, mtl -any,
-                   parsec -any,
-                   errors
+                   parsec -any
   hs-source-dirs:  spec,src
   main-is:         Spec.hs
   ghc-options:     -Wall -rtsopts -O0
-  other-modules:   
-                   ParserSpec,
-                   AcceptanceSpec,
-                   InterpreterSpec
+
+test-suite doctests
+  type:            exitcode-stdio-1.0
+  build-depends:   
+                   base >= 4,
+                   doctest,
+                   containers -any, mtl -any,
+                   parsec -any
+  hs-source-dirs:  src
+  main-is:         Doctests.hs         
+  ghc-options:     -Wall -rtsopts -O0
+  other-modules:   Doctests
 

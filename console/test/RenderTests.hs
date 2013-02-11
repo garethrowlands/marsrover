@@ -6,7 +6,7 @@ where
 import Geometry
 import Environment
 import Render
-import Controller
+import Interpreter
 import Test.HUnit
 
 aRover = RoverPos (2,3) N

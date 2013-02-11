@@ -35,9 +35,9 @@ p_whiteSpace = many1 $ oneOf [' ','\t']
 p_newLine :: CharParser st Char
 p_newLine = optional p_whiteSpace *> newline
 
--- |A 'Rover' with its 'Location' and 'CompassDirection'
+-- |A 'Rover' with its 'Location' and 'Heading'
 p_rover :: CharParser st RoverPos
-p_rover = mkRover <$> p_location <* p_whiteSpace <*> p_direction
+p_rover = mkRover <$> p_location <* p_whiteSpace <*> p_heading
 
 -- |Tuple up two integers. Written in applicative style.
 p_location :: CharParser st Location
@@ -50,28 +50,29 @@ p_location = (,) <$> p_int <* p_whiteSpace <*> p_int
 -- an applicative style.)
 p_location_monadStyle :: CharParser st Location
 p_location_monadStyle = do x <- p_int
-                           p_whiteSpace
+                           _ <- p_whiteSpace
                            y <- p_int
                            return (x,y)
 
 -- |A compass direction
-p_direction :: CharParser st Heading
-p_direction = const N <$> char 'N'
-          <|> const E <$> char 'E'
-          <|> const S <$> char 'S'
-          <|> const W <$> char 'W'
+p_heading :: CharParser st Heading
+p_heading = N <$ char 'N'
+          <|> E <$ char 'E'
+          <|> S <$ char 'S'
+          <|> W <$ char 'W'
 
 -- |A 'Command'
 p_command :: CharParser st Command
-p_command = constChar (Turn AntiClockwise) 'L'
-        <|> constChar (Turn Clockwise) 'R'
-        <|> constChar Forwards 'M'
+p_command = Forwards <$ char 'M'
+        <|> (Turn AntiClockwise) <$ char 'L'
+        <|> (Turn Clockwise) <$ char 'R'
+         
 
 -- |A parser that reads the given character and returns the given value
 constChar :: a -> Char -> CharParser st a
-constChar val ch = const val <$> char ch
+constChar val ch = val <$ char ch
 
--- |Parses an 'Int'. Doesn't allow leading minus sign. Just reads a string of digits
+-- |Parses an Int. Just reads a string of digits
 --  and calls the built-in function to convert them to an 'Int'.
 p_int :: CharParser st Int
 p_int = read <$> s <?> "integer"

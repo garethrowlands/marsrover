@@ -49,10 +49,10 @@ parseCommandTests = mkParserTests "command" p_command [
             ("MM", Right Forwards)
     ]
 
--- |Test parsing of each possible 'CompassDirection'.
+-- |Test parsing of each possible 'Heading'.
 -- Checks that unrecognised input gives a decent error message.
 parseDirectionTests :: Test
-parseDirectionTests = mkParserTests "direction" p_direction [
+parseDirectionTests = mkParserTests "direction" p_heading [
         ("N", Right N),
         ("E", Right E),
         ("S", Right S),

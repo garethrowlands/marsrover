@@ -10,8 +10,8 @@ import Environment
 import Data.Set as S
 import Control.Error (isRight)
 
-instance Arbitrary (S.Set Location) where
-    arbitrary = S.fromList <$> arbitrary
+-- instance Arbitrary (S.Set Location) where
+--    arbitrary = S.fromList <$> arbitrary
     
 instance Arbitrary RoverPos where
     arbitrary = RoverPos <$> arbitrary <*> arbitrary
@@ -21,15 +21,13 @@ instance (Enum a, Bounded a) => Arbitrary a where
 
 instance Arbitrary Environment where
     arbitrary = do
-        Right plateau <- (mkPlateau <$> arbitrary <*> arbitrary) `suchThat` isRight
-        let r = plateauRight plateau
-            t = plateauTop   plateau
-        locations <- S.fromList <$> listOf (arbitraryTupleUpTo r t)
+        NonNegative r <- arbitrary
+        NonNegative t <- arbitrary
+        let Right plateau = mkPlateau r t
+        locations <- setOf (arbitraryPlateauLocation r t)
         return $ Environment plateau locations
-            where arbitraryTupleUpTo r t = do
-                    width <- choose (0, r)
-                    height <- choose (0, t)
-                    return (width,height)
+            where arbitraryPlateauLocation r t = (,) <$> choose (0,r) <*> choose (0,t)
+                  setOf a = S.fromList <$> listOf a
 
 
 instance Arbitrary PlateauOrError where

@@ -8,7 +8,7 @@ where
 
 import Geometry
 import Environment
-import Controller
+import Interpreter
 import qualified Data.Set as S
 
 

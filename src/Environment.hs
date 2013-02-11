@@ -8,7 +8,6 @@ module Environment
     )
 where
 
-import Control.Error
 import Data.Set as S
 import Geometry
 

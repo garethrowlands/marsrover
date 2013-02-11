@@ -18,7 +18,7 @@ import System.Environment (getArgs)
 
 import Parser
 import Render
-import Controller
+import Interpreter
 import Geometry
 import Environment
 import Test
