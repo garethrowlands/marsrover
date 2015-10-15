@@ -55,10 +55,10 @@ p_location_monadStyle = do x <- p_int
 
 -- |A compass direction
 p_heading :: CharParser st Heading
-p_heading = const N <$> char 'N'
-        <|> const E <$> char 'E'
-        <|> const S <$> char 'S'
-        <|> const W <$> char 'W'
+p_heading = N <$ char 'N'
+        <|> E <$ char 'E'
+        <|> S <$ char 'S'
+        <|> W <$ char 'W'
 
 -- |A 'Command'
 p_command :: CharParser st Command

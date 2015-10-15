@@ -4,7 +4,7 @@ cabal-version: >= 1.8
 build-type: Simple
 license: BSD3
 copyright:
-maintainer: gareth.rowlands@akqa.com
+maintainer: garethjamesrowlands@gmail.com
 stability:
 homepage:
 package-url:
@@ -17,7 +17,8 @@ author: Gareth Rowlands
 
 library
   hs-source-dirs: src
-  build-depends: base >=4.0.0.0, containers -any, mtl, parsec
+  build-depends: base >=4.0.0.0, containers -any, mtl, parsec,
+    HUnit, hspec
   exposed-modules: Render Parser Geometry Environment Controller Commands SampleInput
   exposed: True
   buildable: True
@@ -27,13 +28,6 @@ executable rover
   main-is: Main.hs
   buildable: True
   build-depends: base, rover
-  other-modules:
-      AcceptanceSpec,
-      ArbitraryData,
-      EnvironmentSpec,
-      GeometrySpec,
-      InterpreterSpec,
-      ParserSpec
 
 test-suite test
   type: exitcode-stdio-1.0
@@ -61,3 +55,10 @@ test-suite spec
  hs-source-dirs:  spec
  main-is:         Spec.hs
  ghc-options:     -Wall -rtsopts -O0
+ other-modules:
+     AcceptanceSpec,
+     ArbitraryData,
+     EnvironmentSpec,
+     GeometrySpec,
+     InterpreterSpec,
+     ParserSpec

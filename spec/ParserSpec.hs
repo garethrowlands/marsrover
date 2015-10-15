@@ -80,6 +80,7 @@ parseRoverInputSpec = mkParserSpec "input for a single rover" p_roverInput [
     ]
 
 -- |Check the input provided by the specification
+parseOverallInputSpec :: Spec
 parseOverallInputSpec = mkParserSpec "complete acceptance test input" p_overallInput [
         (overallInput, Right parsedOverallInput)
     ]
@@ -152,7 +153,7 @@ mkParserTests parserName parser params = parserName ~: test [
         showParseResult (Left err) = "fails with " ++ show err
         showParseResult (Right res) = "succeeds with " ++ show res
 
--- mkParserSpec :: (Eq a, Show a) => String -> CharParser () a -> [(String, Either String a)] -> Spec
+mkParserSpec :: (Eq a, Show a) => String -> CharParser () a -> [(String, Either String a)] -> Spec
 mkParserSpec parserName parser pairs = describe parserName $
     forM_ pairs $ \(input, expected) ->
         it ("parsing "++ show input ++" "++ showParseResult expected) $
