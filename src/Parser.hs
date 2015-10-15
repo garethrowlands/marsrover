@@ -13,10 +13,8 @@ where
 import Commands
 import Geometry
 import Environment
--- import Text.ParserCombinators.Parsec.Applicative
-import Text.ParserCombinators.Parsec hiding (many, optional, (<|>), spaces)
-import Control.Applicative
-import Control.Monad (MonadPlus(..),ap)
+import Text.ParserCombinators.Parsec hiding (optional)
+import Control.Applicative hiding ((<|>))
 
 -- |Returns the parsed 'OverallInput' from the input string.
 --  Helper function that just runs the parser against the input.
@@ -31,11 +29,12 @@ p_plateau = mkPlateau <$> p_int <* p_whiteSpace <*> p_int
 p_whiteSpace :: CharParser st String
 p_whiteSpace = many1 $ oneOf [' ','\t']
 
+
 -- |End of line (with possible leading whitespace)
 p_newLine :: CharParser st Char
 p_newLine = optional p_whiteSpace *> newline
 
--- |A 'Rover' with its 'Location' and 'Heading'
+-- |A 'Rover' with its 'Location' and 'CompassDirection'
 p_rover :: CharParser st RoverPos
 p_rover = mkRover <$> p_location <* p_whiteSpace <*> p_heading
 
@@ -50,29 +49,28 @@ p_location = (,) <$> p_int <* p_whiteSpace <*> p_int
 -- an applicative style.)
 p_location_monadStyle :: CharParser st Location
 p_location_monadStyle = do x <- p_int
-                           _ <- p_whiteSpace
+                           p_whiteSpace
                            y <- p_int
                            return (x,y)
 
 -- |A compass direction
 p_heading :: CharParser st Heading
-p_heading = N <$ char 'N'
-          <|> E <$ char 'E'
-          <|> S <$ char 'S'
-          <|> W <$ char 'W'
+p_heading = const N <$> char 'N'
+        <|> const E <$> char 'E'
+        <|> const S <$> char 'S'
+        <|> const W <$> char 'W'
 
 -- |A 'Command'
 p_command :: CharParser st Command
-p_command = Forwards <$ char 'M'
-        <|> (Turn AntiClockwise) <$ char 'L'
-        <|> (Turn Clockwise) <$ char 'R'
-         
+p_command = constChar (Turn AntiClockwise) 'L'
+        <|> constChar (Turn Clockwise) 'R'
+        <|> constChar Forwards 'M'
 
 -- |A parser that reads the given character and returns the given value
 constChar :: a -> Char -> CharParser st a
-constChar val ch = val <$ char ch
+constChar val ch = const val <$> char ch
 
--- |Parses an Int. Just reads a string of digits
+-- |Parses an 'Int'. Doesn't allow leading minus sign. Just reads a string of digits
 --  and calls the built-in function to convert them to an 'Int'.
 p_int :: CharParser st Int
 p_int = read <$> s <?> "integer"

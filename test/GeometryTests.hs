@@ -1,5 +1,5 @@
 -- |Tests the "Navigation" module
-module Test.GeometryTests
+module GeometryTests
 
 where
 
@@ -42,4 +42,3 @@ allNavigationTests = "navigation" ~: test [
         directionsAreInversesTest,
         moveInDirectionAddsMovementVectorTest
     ]
-

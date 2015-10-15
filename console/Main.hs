@@ -1,11 +1,6 @@
 -- |Contains the main program. Depending on command-line arguments, can:
---
---  * Run the unit tests
---
 --  * Run interactively, reading stdin and writing stdout
---
 --  * Run the sample input, producing the sample output
---
 --  * Parse the sample input and print a representation of the parsed result
 --
 module Main (
@@ -18,10 +13,10 @@ import System.Environment (getArgs)
 
 import Parser
 import Render
-import Interpreter
+import Controller
 import Geometry
 import Environment
-import Test
+import SampleInput
 
 run s = case parseInput s of
              Left err -> show err
@@ -29,8 +24,6 @@ run s = case parseInput s of
 
 
 printHelpMessage = putStrLn . unlines $ [
-        "rover --test",
-        "    run unit tests",
         "rover --interactive",
         "    accept rover input on standard input and print output to standard out",
         "rover --run",
@@ -41,10 +34,7 @@ printHelpMessage = putStrLn . unlines $ [
 
 main = do args <- getArgs
           case args of
-            ["--test"]        -> printAllTests
             ["--interactive"] -> interact run
             ["--run"]         -> putStr $ run overallInput
             ["--parse"]       -> print $ parseInput overallInput
             _                 -> printHelpMessage
-
-

@@ -167,3 +167,8 @@ pip-log.txt
 
 #SourceGraph
 SourceGraph
+
+.cabal-sandbox
+.stack-work
+dist
+cabal.sandbox.config

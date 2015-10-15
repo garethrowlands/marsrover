@@ -1,5 +1,5 @@
 -- |Tests for the "Parser" module
-module Test.ParserTests
+module ParserTests
 
 where
 
@@ -11,6 +11,7 @@ import Test.HUnit
 import Text.ParserCombinators.Parsec
 import Text.ParserCombinators.Parsec.Error
 import Text.ParserCombinators.Parsec.Pos (newPos)
+import SampleInput
 
 -- |Run the given parser against the given 'String', returning
 -- 'Either' the successfully parsed value or the 'String' part of the error message.
@@ -49,7 +50,7 @@ parseCommandTests = mkParserTests "command" p_command [
             ("MM", Right Forwards)
     ]
 
--- |Test parsing of each possible 'Heading'.
+-- |Test parsing of each possible 'CompassDirection'.
 -- Checks that unrecognised input gives a decent error message.
 parseDirectionTests :: Test
 parseDirectionTests = mkParserTests "direction" p_heading [
@@ -75,7 +76,7 @@ parseRoverTests = mkParserTests "rover " p_rover [
 parseRoverInputTests :: Test
 parseRoverInputTests = "input for a single rover" ~: mkParserTests "rover" p_roverInput [
         ("1 1 N\nLRM",
-         Right $ RoverInput {
+         Right RoverInput {
             inputRover = mkRover (1,1) N,
             inputCommands = [Turn AntiClockwise,Turn Clockwise,Forwards]
          })
@@ -85,17 +86,6 @@ parseRoverInputTests = "input for a single rover" ~: mkParserTests "rover" p_rov
 parseOverallInputTest :: Test
 parseOverallInputTest = "parse overall input" ~:
     Right parsedOverallInput ~=? parseStr p_overallInput overallInput
-
--- |The input provided by the specification.
--- (Implemented as a list of strings rather than a multiline string with back slashes)
-overallInput :: String
-overallInput = unlines [
-        "5 5",
-        "1 2 N",
-        "LMLMLMLMM",
-        "3 3 E",
-        "MMRMMRMRRM"
-    ]
 
 -- |The parsed representation of the input provided in the specification
 parsedOverallInput :: OverallInput
@@ -140,4 +130,3 @@ parserTests = "parser tests" ~: test [
         parseRoverInputTests,
         parseOverallInputTest
     ]
-

@@ -1,5 +1,5 @@
 
-module Test.EnvironmentTests
+module EnvironmentTests
 
 where
 
@@ -26,4 +26,3 @@ outsideTests = "outside" ~: test [
 allEnvironmentTests = "environment tests" ~: test [
         outsideTests
     ]
-

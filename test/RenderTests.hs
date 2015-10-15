@@ -1,12 +1,12 @@
 -- |Test the view layer - that the output data is converted to strings as specified
-module Test.RenderTests
+module RenderTests
 
 where
 
 import Geometry
 import Environment
 import Render
-import Interpreter
+import Controller
 import Test.HUnit
 
 aRover = RoverPos (2,3) N
@@ -52,4 +52,3 @@ allRenderTests = "Render" ~: test [
         testRenderObstacle,
         testRenderPlateauErr
     ]
-

@@ -1,4 +1,4 @@
-module Test.ControllerTests
+module ControllerTests
 
 where
 

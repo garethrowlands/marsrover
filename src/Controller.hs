@@ -4,8 +4,6 @@ module Controller
 where
 
 import Control.Monad.State
-import Control.Error
-import Data.Either
 import Data.Set as S
 
 import Environment
@@ -60,6 +58,7 @@ runRoverInput (RoverInput r cmds) = do
 
 -- |Introduces a rover to the 'Environment'; the resulting 'RoverState' contains 'Either'
 --  the supplied 'RoverPos' or a 'RoverError' if there is an obstacle at that 'Location'.
+{-# ANN landRover "HLint: ignore Eta reduce" #-}
 landRover :: Environment -> RoverPos -> RoverState
 landRover env r = checkRoverPos LandedOn env r
 
@@ -94,4 +93,3 @@ runCommand env (RoverPos l h) Forwards = do
 runCommand env (RoverPos l h) (Turn dir) = do
     let h' = rotate dir h
     return $ RoverPos l h'
-

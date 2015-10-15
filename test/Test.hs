@@ -9,10 +9,11 @@ module Test
 where
 
 import Test.HUnit
-import Test.ParserTests
-import Test.GeometryTests
-import Test.EnvironmentTests
-import Test.RenderTests
+import ParserTests
+import GeometryTests
+import EnvironmentTests
+import RenderTests
+import SampleInput
 
 
 -- |Suite containing all tests
@@ -29,4 +30,3 @@ printAllTests :: IO ()
 printAllTests = do (c,st) <- runTestText putTextToShowS $ allTests
                    print c
                    putStrLn (st "")
-

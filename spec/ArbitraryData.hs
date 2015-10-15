@@ -1,23 +1,28 @@
-{-# LANGUAGE FlexibleInstances, UndecidableInstances, OverlappingInstances,
-    ScopedTypeVariables
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE FlexibleInstances, ScopedTypeVariables, GeneralizedNewtypeDeriving
  #-}
+
 module ArbitraryData where
 
 import Test.QuickCheck
-import Control.Applicative
 import Geometry
 import Environment
 import Data.Set as S
-import Control.Error (isRight)
 
 -- instance Arbitrary (S.Set Location) where
 --    arbitrary = S.fromList <$> arbitrary
-    
-instance Arbitrary RoverPos where
-    arbitrary = RoverPos <$> arbitrary <*> arbitrary
 
-instance (Enum a, Bounded a) => Arbitrary a where
-    arbitrary = elements [minBound .. maxBound]
+newtype Enum' a = Enum' { enum :: a }
+  deriving (Bounded, Enum, Show)
+
+instance Arbitrary RoverPos where
+    arbitrary = RoverPos <$> arbitrary <*> (enum <$> arbitrary)
+
+instance (Enum a, Bounded a) => Arbitrary (Enum' a) where
+     arbitrary = elements [minBound.. maxBound]
+
+instance Arbitrary Rotation where
+     arbitrary = enum <$> arbitrary
 
 instance Arbitrary Environment where
     arbitrary = do
@@ -32,5 +37,3 @@ instance Arbitrary Environment where
 
 instance Arbitrary PlateauOrError where
     arbitrary = mkPlateau <$> arbitrary <*> arbitrary
-
-    
