@@ -27,12 +27,25 @@ executable rover
   main-is: Main.hs
   buildable: True
   build-depends: base, rover
+  other-modules:
+      AcceptanceSpec,
+      ArbitraryData,
+      EnvironmentSpec,
+      GeometrySpec,
+      InterpreterSpec,
+      ParserSpec
 
 test-suite test
   type: exitcode-stdio-1.0
   hs-source-dirs: test
   main-is: Main.hs
   build-depends: base, rover, HUnit, parsec
+  other-modules:
+      EnvironmentTests,
+      GeometryTests,
+      ParserTests,
+      RenderTests,
+      Test
 
 test-suite spec
  type:            exitcode-stdio-1.0

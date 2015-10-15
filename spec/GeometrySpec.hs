@@ -3,13 +3,14 @@
 
 module GeometrySpec where
 
-import Test.HUnit
 import Test.QuickCheck
 import Test.Hspec.QuickCheck ()
 import Test.Hspec
 import Geometry
 import ArbitraryData (Enum'(..))
 
+
+main :: IO ()
 main = hspec spec
 
 spec :: Spec
@@ -24,8 +25,9 @@ spec = do
         --     -- (rotate AntiClockwise . rotate AntiClockwise . rotate AntiClockwise . rotate AntiClockwise) N ~=? N
 
         it "returns to the same heading when applied once in each direction" $
-            property $ \(Enum' heading) -> (rotate Clockwise . rotate AntiClockwise) heading == heading
-            -- property $ \heading -> (rotate AntiClockwise . rotate Clockwise) heading == heading
+            property $ \(Enum' heading) ->
+              ((rotate Clockwise . rotate AntiClockwise) heading == heading) &&
+              ((rotate AntiClockwise . rotate Clockwise) heading == heading)
 
         it "returns W when rotated AntiClockwise from N" $
             rotate AntiClockwise N `shouldBe` W
