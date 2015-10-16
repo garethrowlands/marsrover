@@ -1,8 +1,3 @@
--- |Contains the main program. Depending on command-line arguments, can:
---  * Run interactively, reading stdin and writing stdout
---  * Run the sample input, producing the sample output
---  * Parse the sample input and print a representation of the parsed result
---
 module Main (
 
     main
@@ -31,6 +26,7 @@ printHelpMessage = putStrLn . unlines $ [
         "rover --parse",
         "    accept rover input on standard input and show parsed version on standard out"
     ]
+
 
 main = do args <- getArgs
           case args of

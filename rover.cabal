@@ -32,7 +32,7 @@ executable rover
 test-suite test
   type: exitcode-stdio-1.0
   hs-source-dirs: test
-  main-is: Main.hs
+  main-is: TestMain.hs
   build-depends: base, rover, HUnit, parsec
   other-modules:
       EnvironmentTests,
@@ -53,7 +53,7 @@ test-suite spec
                   parsec -any,
                   errors
  hs-source-dirs:  spec
- main-is:         Spec.hs
+ main-is:         SpecMain.hs
  ghc-options:     -Wall -rtsopts -O0
  other-modules:
      AcceptanceSpec,

@@ -1,0 +1,24 @@
+name: rover
+version: 0.0.1
+cabal-version: >= 1.8
+build-type: Simple
+license: BSD3
+copyright:
+maintainer: garethjamesrowlands@gmail.com
+stability:
+homepage:
+package-url:
+bug-reports:
+synopsis: Mars Rover
+description: Implements the Mars Rover Challenge as specified here:
+             <https://extranet.akqa.com/collaboration/display/intAnoraksChallenge/The+Mars+Rover+Challenge>
+category:
+author: Gareth Rowlands
+
+library
+  hs-source-dirs: src, console
+  build-depends: base >=4.0.0.0, containers -any, mtl, parsec,
+    HUnit, hspec
+  exposed-modules: Main Render Parser Geometry Environment Controller Commands SampleInput
+  exposed: True
+  buildable: True
